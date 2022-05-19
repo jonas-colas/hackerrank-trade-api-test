@@ -8,15 +8,15 @@ exports.store = async (req, res) => {
       message: 'Please provide all required fields'
     });
   }
-  if(tradeType !== 'buy' && tradeType !== 'sell') {
-    res.status(404).json({
+  if(tradeType !== 'buy' || tradeType !== 'sell') {
+    res.status(400).json({
       error: 'Bad Request',
       message: 'Trade type must be either "buy" or "sell"'
     });
   }
 
-  if(shares < 1 || shares < 100) {
-    res.status(404).json({
+  if(shares < 1 || shares > 100) {
+    res.status(400).json({
       error: 'Bad Request',
       message: 'Shares must be between 1 and 100'
     });
@@ -40,7 +40,7 @@ exports.store = async (req, res) => {
     });
     res.status(201).json(trade);
   }catch(err) {
-    res.status(404).json({
+    res.status(400).json({
       error: 'Something went wrong',
     });
   }
@@ -57,14 +57,14 @@ exports.read = async (req, res) => {
       }
     }).sort({'id': -1});
     res.status(200).json(trades);
-  }else if(type) {
+  }else if(type && !user_id) {
     const trades = await Trades.find({
       where: {
         tradeType: type
       }
     }).sort({'id': -1});
     res.status(200).json(trades);
-  }else if(user_id) {
+  }else if(user_id && !type) {
     const trades = await Trades.find({
       where: {
         user_id: user_id

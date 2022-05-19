@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const connectionManager = require('./connection')
+const connectionManager = require('./connection');
 const indexRouter = require('./routes/index');
 const tradesRouter = require('./routes/trades');
 
