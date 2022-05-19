@@ -7,7 +7,7 @@ let connectionManager = {getConnection: () => {}, clearDatabase: () => {}, close
 
 
 // Uncomment the code below to use Mongoose ORM
-// const MongooseConnection = require('./lib/mongoose.connection');
-// connectionManager = new MongooseConnection();
+const MongooseConnection = require('./lib/mongoose.connection');
+connectionManager = new MongooseConnection();
 
 module.exports = connectionManager;
